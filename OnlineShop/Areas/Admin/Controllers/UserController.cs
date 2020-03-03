@@ -36,6 +36,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                 long ID = dao.Insert(user);
                 if(ID >0)
                 {
+                    SetAlert("Thêm User Thành Công", "success");
                     return RedirectToAction("Index", "User");
                 }
                 else
@@ -66,6 +67,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                 var result = dao.Update(user);
                 if (result)
                 {
+                    SetAlert("Sửa User Thành Công", "success");
                     return RedirectToAction("Index", "User");
                 }
                 else
@@ -80,6 +82,12 @@ namespace OnlineShop.Areas.Admin.Controllers
         {
             new UserDAO().Delete(ID);
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public JsonResult ChangeStatus(long id)
+        {
+            var result = new UserDAO().ChangeStatus(id);
+            return Json(new { status = result });
         }
     }
 }

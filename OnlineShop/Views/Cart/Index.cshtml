@@ -1,0 +1,130 @@
+﻿@model List<OnlineShop.Models.CartItem>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+
+<div class="content">
+    <div class="section group">
+        @if (Model == null || Model.Count == 0)
+        {
+            <span class="alert alert-danger">Chưa có sản phẩm nào</span>
+        }
+        else
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="row">Mã SP</th>
+
+                        <th scope="row">Tên SP</th>
+
+                        <th scope="row">Ảnh SP</th>
+
+                        <th scope="row">Số Lượng</th>
+
+                        <th scope="row">Đơn Giá</th>
+
+
+                        <th scope="row">Thành Tiền</th>
+                        <th scope="row"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Product.ID</td>
+                            <td>@item.Product.Name</td>
+                            <td><img src="@item.Product.Image" width="100" /></td>
+                            <td><input type="text" class="txtquantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
+                            <td>@item.Product.Price.GetValueOrDefault()</td>
+                            <td>@((item.Product.Price.GetValueOrDefault() * item.Quantity).ToString("N0"))</td>
+                            <td><a href="#" class="btn-delete" data-id="@item.Product.ID">Xóa</a></td>
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+
+            <button id="btnContinue" class="btn">Tiếp tục mua hàng</button>
+            <button id="btnUpdate" class="btn">Cập nhật giỏ hàng</button>
+            <button id="btnDeleteAll" class="btn">Xóa giỏ hàng</button>
+            <button id="btnPayment" class="btn">Thanh toán</button>
+        }
+
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $('#btnContinue').click(function () {
+        window.location.href = "/";
+    });
+
+     $('#btnPayment').click(function () {
+        window.location.href = "/thanh-toan";
+    });
+
+
+    $('#btnUpdate').click(function () {
+        var listProduct = $('.txtquantity');
+        var cartList = [];
+        $.each(listProduct, function (i, item) {
+            cartList.push({
+                Quantity: $(item).val(),
+                Product: {
+                    ID: $(item).data('id')
+                }
+            });
+        });
+        $.ajax({
+            url: 'Cart/Update',
+            data: { cartModel: JSON.stringify(cartList) },
+            dataType: 'json',
+            type: 'POST',
+            success: function (res) {
+                if (res.status == true) {
+                    window.location.href = "/gio-hang";
+                }
+            }
+        });
+
+    });
+
+    $('#btnDeleteAll').click(function () {
+        $.ajax({
+            url: 'Cart/DeleteAll',
+            dataType: 'json',
+            type: 'POST',
+            success: function (res) {
+                if (res.status == true) {
+                    window.location.href = "/gio-hang";
+                }
+            }
+        });
+    })
+
+    $('.btn-delete').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/Cart/Delete',
+            dataType: 'json',
+            data: { id: $(this).data('id') },
+            type: 'POST',
+            success: function (res) {
+                if (res.status == true) {
+                    window.location.href = "/gio-hang";
+                }
+            }
+        })
+    })
+</script>
+
+
+

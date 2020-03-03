@@ -59,6 +59,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\CategoryDAO.cs" />
+    <Compile Include="DAO\ContentDAO.cs" />
+    <Compile Include="DAO\FooterDAO.cs" />
+    <Compile Include="DAO\MenuDAO.cs" />
+    <Compile Include="DAO\OrderDAO.cs" />
+    <Compile Include="DAO\OrderDetailDAO.cs" />
+    <Compile Include="DAO\ProductCategoryDAO.cs" />
+    <Compile Include="DAO\ProductDAO.cs" />
+    <Compile Include="DAO\SlideDAO.cs" />
     <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="EF\About.cs" />
     <Compile Include="EF\Category.cs" />
@@ -70,6 +79,8 @@
     <Compile Include="EF\Menu.cs" />
     <Compile Include="EF\MenuType.cs" />
     <Compile Include="EF\OnlineShopDBContext.cs" />
+    <Compile Include="EF\Order.cs" />
+    <Compile Include="EF\OrderDetail.cs" />
     <Compile Include="EF\Product.cs" />
     <Compile Include="EF\ProductCategory.cs" />
     <Compile Include="EF\Slide.cs" />
@@ -85,6 +96,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

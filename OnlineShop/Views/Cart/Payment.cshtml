@@ -1,0 +1,80 @@
+﻿@model List<OnlineShop.Models.CartItem>
+@{
+    ViewBag.Title = "Thanh Toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+
+<div class="content">
+    <div class="section group">
+  
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="row">Mã SP</th>
+
+                        <th scope="row">Tên SP</th>
+
+                        <th scope="row">Ảnh SP</th>
+
+                        <th scope="row">Số Lượng</th>
+
+                        <th scope="row">Đơn Giá</th>
+
+
+                        <th scope="row">Thành Tiền</th>
+                        <th scope="row"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Product.ID</td>
+                            <td>@item.Product.Name</td>
+                            <td><img src="@item.Product.Image" width="100" /></td>
+                            <td><input type="text" class="txtquantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
+                            <td>@item.Product.Price.GetValueOrDefault()</td>
+                            <td>@((item.Product.Price.GetValueOrDefault() * item.Quantity).ToString("N0"))</td>
+                            <td><a href="#" class="btn-delete" data-id="@item.Product.ID">Xóa</a></td>
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+
+        
+
+    </div>
+    <div class="section group">
+        <div class="col-md-6">
+            @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label>Người Nhận</label>
+                    <input name="shipName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Điện Thoại</label>
+                    <input name="mobile" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Địa Chỉ</label>
+                    <input name="address" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input name="email" class="form-control" />
+                </div>
+                <button type="submit" class="btn">Thanh Toán</button>
+            }
+        </div>
+     
+
+    </div>
+</div>
