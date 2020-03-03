@@ -99,7 +99,7 @@ namespace OnlineShop.Controllers
         {
             //lay ra danh sach gio hang tu session
             var sessionCart = (List<CartItem>)Session[CartSession];
-            //xoa cac san pham co ID bang ID truyen vao
+            //xoa cac san pham trong gio hang co ID bang ID truyen vao
             sessionCart.RemoveAll(x => x.Product.ID == id);
             //gan lai vao session
             Session[CartSession] = sessionCart;
